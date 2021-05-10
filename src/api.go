@@ -52,9 +52,10 @@ func createTransaction(c echo.Context) error {
 
 	err = json.Unmarshal(body, &t)
 
+	c.Logger().Printf("%s", t.String())
+
 	if err != nil {
 		c.Logger().Printf("%v", err)
-		c.Response().Writer.WriteHeader(http.StatusBadRequest)
 		return err
 	}
 
@@ -62,7 +63,6 @@ func createTransaction(c echo.Context) error {
 
 	if err != nil {
 		c.Logger().Printf("%v", err)
-		c.Response().Writer.WriteHeader(http.StatusInternalServerError)
 	}
 
 	return nil
