@@ -22,8 +22,7 @@ func (a *Account) Insert() error {
 	}
 	defer conn.Release()
 
-	_, err = conn.Exec(context.Background(), insertAccount,
-		[]interface{}{a.Document})
+	_, err = conn.Exec(context.Background(), insertAccount, a.Document)
 
 	return err
 }
@@ -36,9 +35,11 @@ func (a *Account) Select() error {
 	}
 	defer conn.Release()
 
-	_, err = conn.Query(context.Background(), selectAccount,
-		[]int{a.ID})
+	rows, err := conn.Query(context.Background(), selectAccount, a.ID)
+
+	for rows.Next() {
+		rows.Scan(&a.ID, &a.Document)
+	}
 
 	return err
 }
-
