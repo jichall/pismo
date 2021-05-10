@@ -20,7 +20,7 @@ func serve(host, port string) {
 	e.POST("/accounts", createAccount)
 	e.POST("/transactions", createTransaction)
 
-	e.GET("/accounts/:accountID", fetchAccount)
+	e.GET("/accounts/:account_id", fetchAccount)
 
 	e.Logger.Fatal(e.StartServer(server))
 }
