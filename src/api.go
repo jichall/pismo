@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/jichall/pismo/src/entities"
 	"github.com/labstack/echo"
 )
 
@@ -19,7 +20,7 @@ func createAccount(c echo.Context) error {
 
 	// parsing the body (as default bind is not available)
 	c.Logger().Printf("%s", string(body))
-	a := Account{}
+	a := entities.Account{}
 
 	err = json.Unmarshal(body, &a)
 
@@ -28,7 +29,8 @@ func createAccount(c echo.Context) error {
 		return err
 	}
 
-	err = a.Insert()
+	c.Logger().Printf("%s", a.String())
+	err = a.Insert(pool)
 
 	if err != nil {
 		c.Logger().Printf("%v", err)
@@ -48,7 +50,7 @@ func createTransaction(c echo.Context) error {
 
 	// parsing the body (as default bind is not available)
 	c.Logger().Printf("%s", string(body))
-	t := Transaction{}
+	t := entities.Transaction{}
 
 	err = json.Unmarshal(body, &t)
 
@@ -59,7 +61,7 @@ func createTransaction(c echo.Context) error {
 		return err
 	}
 
-	err = t.Insert()
+	err = t.Insert(pool)
 
 	if err != nil {
 		c.Logger().Printf("%v", err)
@@ -77,8 +79,10 @@ func fetchAccount(c echo.Context) error {
 		return err
 	}
 
-	account := Account{ID: int(parsed)}
-	err = account.Select()
+	account := entities.Account{ID: int(parsed)}
+	err = account.Select(pool)
+
+	c.Logger().Printf(account.String())
 
 	if err != nil {
 		c.Logger().Printf("%v", err)
@@ -88,5 +92,9 @@ func fetchAccount(c echo.Context) error {
 	c.Logger().Printf("%v", account.String())
 	c.JSON(http.StatusOK, account)
 
+	return nil
+}
+
+func fetchTransaction(c echo.Context) error {
 	return nil
 }

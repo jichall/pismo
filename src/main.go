@@ -4,14 +4,14 @@ import (
 	"flag"
 	"log"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jichall/pismo/src/database"
 )
 
 var (
 	host = flag.String("host", "127.0.0.1", "")
 	port = flag.String("port", "8090", "")
 
-	databaseSettings = DatabaseSettings{
+	databaseSettings = database.DatabaseSettings{
 		Host:     "localhost",
 		Port:     "5432",
 		User:     "pismo",
@@ -19,7 +19,7 @@ var (
 		Database: "pismo",
 	}
 
-	pool *pgxpool.Pool
+	pool *database.Pool
 )
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 
 	// prevents variable shadowing
 	var err error
-	pool, err = connect(databaseSettings)
+	pool, err = database.Connect(databaseSettings)
 
 	if err != nil {
 		log.Fatalf("couldn't initialize connection pool, reason %v", err)

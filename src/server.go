@@ -21,6 +21,7 @@ func serve(host, port string) {
 	e.POST("/transactions", createTransaction)
 
 	e.GET("/accounts/:account_id", fetchAccount)
+	e.GET("/transactions/:transaction_id", fetchTransaction)
 
 	e.Logger.Fatal(e.StartServer(server))
 }

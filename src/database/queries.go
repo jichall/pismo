@@ -1,0 +1,33 @@
+package database
+
+const (
+	InsertAccount = `
+	INSERT INTO
+		TB_ACCOUNT(ACCOUNT_DOCUMENT, ACCOUNT_AVAILABLE_CREDIT)
+
+		VALUES (
+			$1, $2
+		)
+	`
+
+	UpdateAccount = `
+		UPDATE TB_ACCOUNT
+			SET ACCOUNT_AVAILABLE_CREDIT = $1
+		WHERE ACCOUNT_ID = $2
+	`
+	SelectAccount = `SELECT * FROM TB_ACCOUNT WHERE ACCOUNT_ID = $1`
+
+	InsertTransaction = `
+	INSERT INTO
+		TB_TRANSACTION (
+			TRANSACTION_AMOUNT,
+			TRANSACTION_DATE,
+			ACCOUNT_ID,
+			TRANSACTION_TYPE
+		)
+
+		VALUES (
+			$1, $2, $3, $4
+		)
+	`
+)
