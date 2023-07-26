@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/jichall/pismo/src/api"
 	"github.com/labstack/echo"
 )
 
@@ -17,11 +18,13 @@ func serve(host, port string) {
 
 	e := echo.New()
 
-	e.POST("/accounts", createAccount)
-	e.POST("/transactions", createTransaction)
+	a := api.New(pool)
 
-	e.GET("/accounts/:account_id", fetchAccount)
-	e.GET("/transactions/:transaction_id", fetchTransaction)
+	e.POST("/accounts", a.CreateAccount)
+	e.POST("/transactions", a.CreateTransaction)
+
+	e.GET("/accounts/:account_id", a.GetAccount)
+	e.GET("/transactions/:transaction_id", a.GetTransaction)
 
 	e.Logger.Fatal(e.StartServer(server))
 }

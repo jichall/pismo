@@ -13,7 +13,6 @@ type Pool struct {
 }
 
 func (d *Pool) Exec(query string, args ...interface{}) error {
-
 	conn, err := d.conn.Acquire(context.Background())
 
 	if err != nil {
@@ -27,7 +26,6 @@ func (d *Pool) Exec(query string, args ...interface{}) error {
 }
 
 func (d *Pool) Query(query string, args ...interface{}) (pgx.Rows, error) {
-
 	conn, err := d.conn.Acquire(context.Background())
 
 	if err != nil {

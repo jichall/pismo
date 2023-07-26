@@ -1,10 +1,15 @@
 package entities
 
 import (
+	"errors"
 	"fmt"
 	"log"
 
 	"github.com/jichall/pismo/src/database"
+)
+
+var (
+	ErrUserValidation = errors.New("user invalid")
 )
 
 type Account struct {
@@ -16,6 +21,14 @@ type Account struct {
 func (a *Account) String() string {
 	return fmt.Sprintf("Account<id: %d document: %s credit: %d>", a.ID,
 		a.Document, a.Credit)
+}
+
+func (a *Account) Validate() error {
+	if a.ID < 0 || len(a.Document) <= 0 {
+		return ErrUserValidation
+	}
+
+	return nil
 }
 
 func (a *Account) Insert(db database.DatabaseFunctions) error {

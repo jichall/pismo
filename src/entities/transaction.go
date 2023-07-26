@@ -26,7 +26,7 @@ const (
 
 func (t *Transaction) String() string {
 
-	format := "Transaction<id: %d amount: %f account_id: %d type: %d time: %v>"
+	format := "Transaction<id: %d amount: %d account_id: %d type: %d time: %v>"
 
 	return fmt.Sprintf(format, t.ID, t.Amount, t.Account, t.Type, t.Date)
 }
@@ -48,6 +48,7 @@ func (t *Transaction) Insert(db database.DatabaseFunctions) error {
 		t.Amount = -t.Amount
 	}
 
+	// incorrect way of dealing with monetary data
 	amount := float64(t.Amount) / 100
 	credit := float64(a.Credit) / 100
 
